@@ -1,17 +1,101 @@
-# photo_of_the_day_shma
+# Лабораторная работа №5. Асинхронность в Dart и Flutter.Создание приложения «Фото дня»
 
-A new Flutter project.
+### Цель работы:
 
-## Getting Started
+Понять концепцию асинхронного программирования — изучить Future, async/await в Dart. Применить эти знания во Flutter-приложении, которое загружает случайные фотографии из интернета.
 
-This project is a starting point for a Flutter application.
+### Необходимые инструменты:
 
-A few resources to get you started if this is your first Flutter project:
+- Flutter 3.35+
+- VS Code (рекомендуется для лабораторной работы), либо IntelliJ IDEA /
+  Android Studio с установленным плагином Flutter
+- Git
+- Браузер Google Chrome / Edge
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Теоретическая часть.Зачем нужна асинхронность?
+
+Представьте: вы заказали пиццу по телефону. Есть два варианта поведения:
+**Синхронный** — вы кладёте трубку, садитесь у двери и ждёте. Вы не можете ничего делать, пока пицца не приедет. Всё заморожено.
+**Асинхронный** — вы кладёте трубку, занимаетесь своими делами. Когда курьер звонит в дверь — вы прерываетесь и забираете пиццу.
+В программировании то же самое. Когда приложение делает запрос к серверу или читает файл — это занимает время. Если ждать синхронно — интерфейс зависнет, пользователь не сможет ничего делать. Если ждать асинхронно —
+приложение остаётся живым
+
+### Что такое Future?
+
+Future<T> — это объект, который обещает вернуть значение типа T в будущем.
+Сейчас результата нет, но он появится позже.
+
+---
+
+## Примеры кода
+
+```dart
+ Widget _buildAnimalToggle() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        ChoiceChip(
+          label: const Text('🐶 Собаки'),
+          selected: _animalType == PhotoType.dog,
+          onSelected: (selected) {
+            if (selected) {
+              setState(() {
+                _animalType = PhotoType.dog;
+                _imageUrl = null;
+                _errorMessage = null;
+              });
+            }
+          },
+        ),
+        const SizedBox(width: 12),
+        ChoiceChip(
+          label: const Text('Пейзаж'),
+          selected:
+              _animalType == PhotoType.landscapes,
+          onSelected: (selected) {
+            if (selected) {
+              setState(() {
+                _animalType =
+                    PhotoType.landscapes;
+                _imageUrl = null;
+                _errorMessage = null;
+              });
+            }
+          },
+        ),
+      ],
+    );
+  }
+```
+
+## Итог — что изучили
+
+| Концепция                 | Описание                                                         |
+| ------------------------- | ---------------------------------------------------------------- |
+| Future<T>                 | Объект-обещание: вернёт значение типа T в будущем                |
+| async                     | Помечает функцию как асинхронную, разрешает использовать await   |
+| await                     | Приостанавливает функцию до завершения Future, не блокируя поток |
+| try/catch                 | Перехватывает ошибки в асинхронном коде                          |
+| http.get()                | Отправляет GET-запрос и возвращает Future<Response>              |
+| jsonDecode()              | Парсит JSON-строку в Map или List                                |
+| CircularProgressIndicator | Виджет-крутилка, индикатор загрузки                              |
+| Image.network()           | Загружает и отображает картинку по URL                           |
+| ChoiceChip                | Виджет для выбора одного варианта из нескольких                  |
+
+---
+
+### Автор
+
+**Выполнил:** Шмаль Иван Максимович
+**Группа:** ИСП - 232
+**Дата:** 05.05.26
+
+### Лицензия
+
+Проект создан в учебных целях.
+
+## Ссылка на репозиторий
+
+[Жма в меня 👉👈, пож 🙏🙏🙏](https://github.com/shcmal-chel/flutter-lab5)
